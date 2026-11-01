@@ -1,0 +1,1143 @@
+/* Syrinx — Chora TV design language, tuned for Chrome 66 (Android 9 WebView).
+   Flat near-black surfaces, an icon rail, white focus rings, and artwork colour
+   only where it carries meaning: the home hero and the playing page. */
+
+:root {
+  --bg: #0e0e11;
+  --surface: #17171b;
+  --surface-2: #222227;
+  --surface-3: #2c2c32;
+  --line: rgba(255, 255, 255, .08);
+  --text: #ece9f0;
+  --text-2: rgba(236, 233, 240, .66);
+  --text-3: rgba(236, 233, 240, .42);
+  --ink: #141218;
+  /* Chora's TV scheme treats focus and primary action as plain light grey
+     rather than a brand hue; the artwork supplies the colour. */
+  --accent: #ece9f0;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: var(--text);
+  font-family: "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC",
+               "Microsoft YaHei", "Droid Sans Fallback", sans-serif;
+  font-size: 20px;
+  line-height: 1.4;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: none;
+  background: var(--bg);
+}
+
+#app {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+button { font-family: inherit; }
+
+/* ---------- focus ---------- */
+
+.f {
+  outline: none;
+  position: relative;
+  transition: background-color .16s ease, box-shadow .16s ease,
+              border-color .16s ease, color .16s ease, transform .16s ease;
+}
+
+.focused { z-index: 3; }
+
+/* ---------- login ---------- */
+
+#login {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  overflow: hidden;
+}
+
+.login-card {
+  position: relative;
+  width: 720px;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 48px 56px 42px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+}
+
+.login-logo { font-size: 42px; font-weight: 600; letter-spacing: 1px; }
+.login-logo span {
+  font-size: 18px;
+  color: var(--text-2);
+  border: 2px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  padding: 2px 12px;
+  vertical-align: 12px;
+  margin-left: 12px;
+  letter-spacing: 2px;
+}
+.login-sub { color: var(--text-2); margin: 12px 0 30px; font-size: 19px; }
+.field-label { display: block; color: var(--text-3); font-size: 15px; letter-spacing: 1px; margin: 16px 0 8px; }
+
+.field {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 21px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.field.focused { border-color: var(--text); background: var(--surface-3); }
+
+.btn {
+  display: inline-block;
+  padding: 15px 32px;
+  font-size: 21px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 2px solid transparent;
+  border-radius: 999px;
+}
+.btn.focused { background: var(--accent); color: var(--ink); }
+.btn-primary {
+  margin-top: 32px;
+  width: 100%;
+  background: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+}
+.btn-primary.focused {
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, .42), 0 0 40px rgba(255, 255, 255, .22);
+}
+
+/* Destructive: logging out means typing the NAS password again on a remote. */
+.btn-danger {
+  background: rgba(255, 92, 92, .10);
+  color: #ff9b9b;
+}
+.btn-danger.focused {
+  background: #ff8a8a;
+  color: #2a0606;
+  box-shadow: 0 0 0 4px rgba(255, 120, 120, .38);
+}
+
+/* ---------- settings ---------- */
+
+.set-card {
+  max-width: 900px;
+  padding: 4px 34px;
+  border-radius: 24px;
+  background: var(--surface);
+}
+
+.set-user {
+  display: flex;
+  align-items: center;
+  height: 132px;
+  border-bottom: 1px solid var(--line);
+}
+
+.set-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--accent);
+}
+
+.set-user-info { margin-left: 22px; }
+.set-user-name { font-size: 26px; font-weight: 600; color: var(--text); }
+.set-user-sub { margin-top: 7px; font-size: 16px; color: var(--text-3); }
+
+.set-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 78px;
+}
+
+.set-row + .set-row { border-top: 1px solid var(--line); }
+.set-key { font-size: 18px; color: var(--text-3); letter-spacing: .6px; }
+.set-val { font-size: 20px; color: var(--text); }
+.set-val.mono {
+  font-family: Menlo, "Courier New", monospace;
+  font-size: 19px;
+  letter-spacing: .2px;
+  color: #cdc9d6;
+}
+
+.login-err {
+  margin-top: 20px;
+  padding: 13px 17px;
+  border-radius: 12px;
+  background: rgba(255, 92, 92, .13);
+  color: #ff9b9b;
+  font-size: 18px;
+}
+.login-hint { margin-top: 26px; color: var(--text-3); font-size: 15px; text-align: center; letter-spacing: .5px; }
+
+/* ---------- shell ---------- */
+
+#shell { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+#main { flex: 1; display: flex; min-height: 0; }
+
+/* Icon rail: no labels, no brand. The section name floats out of the rail only
+   while that item has focus, which keeps the rail quiet without making ten
+   glyphs a memory test. */
+#sidebar {
+  width: 168px;
+  flex: 0 0 168px;
+  padding: 26px 0 18px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+#nav-list { display: flex; flex-direction: column; }
+
+.nav-item {
+  width: 96px;
+  height: 84px;
+  margin: 0 auto 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: var(--text-3);
+}
+.nav-item .nav-ico {
+  width: 64px; height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color .16s ease, color .16s ease, transform .18s ease;
+}
+.nav-item .nav-ico svg {
+  width: 30px; height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.nav-item.active { color: var(--text); }
+.nav-item.active .nav-ico { background: rgba(255, 255, 255, .10); }
+.nav-item.focused { color: var(--ink); }
+.nav-item.focused .nav-ico {
+  background: var(--accent);
+  transform: scale(1.06);
+}
+
+.nav-label {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  padding: 7px 15px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-14px, -50%);
+  transition: opacity .14s ease, transform .14s ease;
+}
+.nav-item.focused .nav-label { opacity: 1; transform: translate(6px, -50%); }
+
+.nav-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 10px 4px;
+  color: var(--text-3);
+  font-size: 13px;
+  word-break: break-all;
+  text-align: center;
+}
+.nav-foot::before {
+  content: "";
+  width: 8px; height: 8px;
+  flex: 0 0 auto;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #4ad07f;
+}
+
+#content {
+  flex: 1;
+  min-width: 0;
+  padding: 34px 56px 56px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ---------- content ---------- */
+
+.page {
+  animation: pageIn .28s ease both;
+}
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  margin: 8px 0 22px;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -.5px;
+}
+.section-head .more {
+  margin-left: 18px;
+  color: var(--text-3);
+  font-size: 19px;
+  letter-spacing: .5px;
+}
+
+/* sort chips sit on the header line, right-aligned the way Chora puts its
+   sort button at the end of the album grid */
+.section-head.bar { align-items: center; }
+.chips { display: flex; align-items: center; margin-left: auto; }
+.chip {
+  height: 56px;
+  margin-left: 12px;
+  padding: 0 26px;
+  border: 1.5px solid rgba(255, 255, 255, .14);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(236, 233, 240, .66);
+  font-family: inherit;
+  font-size: 21px;
+  font-weight: 500;
+  transition: transform .12s ease, background .12s ease, color .12s ease;
+}
+.chip.on { background: rgba(255, 255, 255, .16); border-color: transparent; color: var(--text); }
+.chip.focused { background: var(--accent); border-color: transparent; color: var(--ink); transform: scale(1.06); }
+.chip .chip-dir { display: inline-block; margin-left: 8px; color: var(--text-3); font-size: 19px; }
+.chip.on .chip-dir, .chip.focused .chip-dir { color: inherit; }
+.section-gap { height: 54px; }
+
+/* ---------- home hero ---------- */
+
+/* Chora's carousel: the artwork holds the right side, fades into the album's
+   dominant colour, and the title block sits on that colour at the left. */
+.hero {
+  position: relative;
+  height: 520px;
+  margin: 0 0 46px;
+  border-radius: 26px;
+  overflow: hidden;
+  background: rgb(var(--hero-rgb, 52, 52, 60));
+}
+.hero.focused {
+  box-shadow: 0 0 0 3px var(--accent), 0 0 0 8px rgba(255, 255, 255, .12);
+}
+.hero-art {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 64%;
+  background: center/cover no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 46%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 46%);
+  transition: background-image .3s ease;
+}
+.hero-shade {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .58) 0%, rgba(0, 0, 0, .22) 44%, rgba(0, 0, 0, 0) 66%),
+    linear-gradient(0deg, rgba(0, 0, 0, .34) 0%, rgba(0, 0, 0, 0) 46%);
+  pointer-events: none;
+}
+.hero-info {
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 52%;
+  padding: 0 0 0 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-kicker {
+  font-size: 23px;
+  color: rgba(255, 255, 255, .72);
+  letter-spacing: .3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hero-title {
+  margin-top: 14px;
+  font-size: 66px;
+  font-weight: 700;
+  line-height: 1.12;
+  max-height: 2.24em;
+  letter-spacing: -1px;
+  color: #fff;
+  text-shadow: 0 4px 26px rgba(0, 0, 0, .35);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* Round play key, shared by the hero and the album/playlist headers: the
+   triangle says everything a "播放" label would, so no label rides along. */
+.play-key {
+  align-self: flex-start;
+  width: 68px;
+  height: 68px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--ink);
+  background: var(--accent);
+  border: 0;
+  border-radius: 50%;
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+/* nudged right so the triangle's optical centre lands on the circle's */
+.play-key svg { width: 26px; height: 26px; margin-left: 4px; fill: currentColor; }
+/* a symmetric glyph needs no optical nudge, and it has to fill more of the
+   circle than the solid triangle does to read at the same weight */
+.play-key.shuffle svg { width: 34px; height: 34px; margin-left: 0; }
+.play-key.focused {
+  transform: scale(1.06);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, .38), 0 16px 40px rgba(0, 0, 0, .45);
+}
+.hero-info .play-key { margin-top: 40px; }
+
+.hero-dots {
+  position: absolute;
+  right: 46px; bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+.hero-dot {
+  width: 9px; height: 9px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .34);
+  transition: background-color .2s ease, transform .2s ease;
+}
+.hero-dot.on { background: #fff; transform: scale(1.22); }
+
+/* ---------- cards ---------- */
+
+.grid { display: flex; flex-wrap: wrap; margin: 0 -16px; }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 16px 34px;
+  border-radius: 16px;
+}
+.card.focused { box-shadow: none; }
+
+.card .cover {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 16px;
+  background: #1d1d22 center/cover no-repeat;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card.focused .cover {
+  transform: scale(1.045);
+  box-shadow: 0 0 0 3px var(--accent), 0 20px 44px rgba(0, 0, 0, .55);
+}
+
+/* No artwork: a faint note in the middle instead of an empty tile. */
+.cover.noart::before,
+.rcover.noart::before,
+.detail-cover.noart::before,
+.np-cover.noart::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 30%; height: 30%;
+  transform: translate(-50%, -50%);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e9eff8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18V6l10-2v12'/%3E%3Ccircle cx='6.5' cy='18' r='2.5'/%3E%3Ccircle cx='16.5' cy='16' r='2.5'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity: .3;
+  pointer-events: none;
+}
+.rcover.noart::before { width: 44%; height: 44%; }
+
+.card .name {
+  flex: 1 1 auto;
+  margin-top: 16px;
+  /* two lines, ellipsised; the flexible box pushes every subtitle onto the
+     same baseline, because cards on one grid line stretch to equal height */
+  max-height: 2.7em;
+  font-size: 25px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.32;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.card .sub { margin-top: 6px; font-size: 21px; color: var(--text-3); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+/* Artists carry the name inside the art, like Chora's compact card. */
+.card.compact .name {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  margin: 0;
+  padding: 46px 20px 16px;
+  max-height: none;
+  font-size: 27px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .66));
+  border-radius: 0 0 16px 16px;
+  pointer-events: none;
+}
+
+.avatar { display: flex; align-items: center; justify-content: center; font-size: 56px; color: #5b5b66; }
+
+/* ---------- song rows ---------- */
+
+.list { display: flex; flex-direction: column; }
+
+.row {
+  display: flex;
+  align-items: center;
+  min-height: 104px;
+  margin-bottom: 8px;
+  padding: 8px 18px 8px 8px;
+  border-radius: 14px;
+  transition: background-color .16s ease;
+}
+.row.focused { background: rgba(255, 255, 255, .10); }
+.row .rcover {
+  position: relative;
+  width: 92px; height: 92px;
+  border-radius: 10px;
+  margin-right: 22px;
+  background: #1d1d22 center/cover no-repeat;
+  flex: 0 0 auto;
+  overflow: hidden;
+  transition: box-shadow .16s ease;
+}
+.row.focused .rcover { box-shadow: 0 0 0 3px var(--accent); }
+/* track number standing in for the cover on an album */
+.row .rnum {
+  width: 92px; height: 92px;
+  flex: 0 0 92px;
+  margin-right: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.row.focused .rnum { color: var(--accent); }
+.row .rbody { flex: 1; min-width: 0; }
+.row .rtitle { font-size: 26px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row .rsub { font-size: 21px; color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 3px; }
+.row.now .rtitle { color: #fff; font-weight: 600; }
+
+/* little equaliser in place of the cover while it plays */
+.eq {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, .55);
+  border-radius: 10px;
+}
+.eq i {
+  display: block;
+  width: 4px;
+  height: 30px;
+  margin: 0 2px;
+  border-radius: 2px;
+  background: #fff;
+  transform-origin: center;
+  animation: eq .9s ease-in-out infinite;
+}
+.eq i:nth-child(1) { animation-delay: -.15s; }
+.eq i:nth-child(2) { animation-delay: -.5s; }
+.eq i:nth-child(3) { animation-delay: -.8s; }
+.is-paused .eq i { animation-play-state: paused; }
+@keyframes eq {
+  0%, 100% { transform: scaleY(.3); }
+  50% { transform: scaleY(1); }
+}
+
+/* ---------- detail pages ---------- */
+
+.detail-hero {
+  position: relative;
+  margin: -34px -56px 34px;
+  padding: 62px 56px 40px;
+  overflow: hidden;
+  background: rgb(var(--hero-rgb, 32, 32, 38));
+}
+.detail-head { position: relative; z-index: 1; display: flex; align-items: flex-end; }
+/* The header backdrop is the cover's palette, not the cover itself: a few
+   blurred colour fields, the way the now-playing page builds its background.
+   The artwork stays sharp where it matters — on the 280px thumbnail. */
+.hero-bg {
+  position: absolute;
+  top: -22%; right: -12%; bottom: -22%; left: -12%;
+  background:
+    radial-gradient(circle at 74% 24%, rgba(var(--hero-rgb-2, 126, 126, 146), .52), rgba(var(--hero-rgb-2, 126, 126, 146), 0) 60%),
+    radial-gradient(circle at 88% 84%, rgba(var(--hero-rgb, 88, 88, 106), .58), rgba(var(--hero-rgb, 88, 88, 106), 0) 62%),
+    radial-gradient(circle at 44% 6%, rgba(var(--hero-rgb-3, 40, 40, 50), .88), rgba(var(--hero-rgb-3, 40, 40, 50), 0) 70%);
+  filter: blur(46px) saturate(1.06);
+}
+.detail-hero::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .52) 0%, rgba(0, 0, 0, .18) 50%, rgba(0, 0, 0, 0) 76%),
+    linear-gradient(0deg, rgba(0, 0, 0, .58), rgba(0, 0, 0, 0) 64%);
+  pointer-events: none;
+}
+.detail-cover {
+  position: relative;
+  width: 280px; height: 280px;
+  flex: 0 0 auto;
+  border-radius: 16px;
+  background: #1d1d22 center/cover no-repeat;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, .5);
+}
+.detail-info { padding: 0 0 6px 44px; min-width: 0; position: relative; }
+.detail-kind {
+  display: inline-block;
+  font-size: 19px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, .7);
+}
+.detail-title {
+  font-size: 60px;
+  font-weight: 700;
+  margin: 10px 0 12px;
+  line-height: 1.12;
+  letter-spacing: -1px;
+  color: #fff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.detail-meta { color: rgba(255, 255, 255, .72); font-size: 22px; }
+.detail-actions { margin-top: 26px; }
+
+.empty { color: var(--text-3); font-size: 21px; padding: 34px 6px; }
+
+/* roomy empty state used where a whole page has nothing to show yet */
+.hint { text-align: center; padding: 110px 0 40px; }
+.hint-ico {
+  width: 96px; height: 96px;
+  margin: 0 auto 26px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, .06);
+}
+.hint-ico svg {
+  width: 44px; height: 44px;
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: .72;
+}
+.hint-title { font-size: 25px; color: var(--text-2); }
+.hint-sub { margin-top: 10px; font-size: 17px; color: var(--text-3); }
+
+/* search field carries its own magnifier */
+#search-box {
+  height: 72px;
+  padding-left: 64px;
+  font-size: 23px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8794' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.6'/%3E%3Cpath d='m15.9 15.9 4.4 4.4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 22px center;
+  background-size: 26px 26px;
+}
+#search-box.focused {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ece9f0' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.6'/%3E%3Cpath d='m15.9 15.9 4.4 4.4'/%3E%3C/svg%3E");
+}
+.loading { color: var(--text-3); font-size: 21px; padding: 34px 6px; animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: .45; } 50% { opacity: .9; } }
+
+/* ---------- skeletons ---------- */
+
+/* Gray blocks in the shape of what is loading, with one band sweeping across
+   them, so the page does not jump when the data lands. The sweep is a moving
+   background gradient: no extra nodes, no script work per frame. */
+.sk {
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, .055);
+  background-image: linear-gradient(100deg,
+      rgba(255, 255, 255, 0) 26%, rgba(255, 255, 255, .085) 50%, rgba(255, 255, 255, 0) 74%);
+  background-size: 240% 100%;
+  background-repeat: no-repeat;
+  animation: skSweep 1.5s linear infinite;
+}
+@keyframes skSweep {
+  from { background-position: 170% 0; }
+  to { background-position: -70% 0; }
+}
+
+.sk-wrap { display: flex; flex-direction: column; }
+.sk-wrap.cards { flex-direction: row; flex-wrap: wrap; margin: 0 -16px; }
+
+.sk-row {
+  display: flex;
+  align-items: center;
+  height: 112px;
+  margin-bottom: 8px;
+  padding: 8px 18px 8px 8px;
+}
+.sk-row .sk-cover { width: 92px; height: 92px; border-radius: 10px; flex: 0 0 auto; }
+.sk-row .sk-lines { flex: 1; margin-left: 22px; }
+.sk-row .sk-t1 { width: 44%; height: 16px; }
+.sk-row .sk-t2 { width: 24%; height: 13px; margin-top: 11px; opacity: .7; }
+
+.sk-card { width: 300px; margin: 0 16px 34px; }
+.sk-card .sk-art { width: 100%; height: 300px; border-radius: 16px; }
+.sk-card .sk-name { height: 20px; margin-top: 18px; width: 82%; }
+.sk-card .sk-sub { height: 14px; margin-top: 11px; width: 46%; opacity: .7; }
+
+.sk-hero { display: flex; align-items: center; padding: 4px 0 46px; }
+.sk-hero .sk-art-big { width: 280px; height: 280px; border-radius: 16px; flex: 0 0 auto; }
+.sk-hero .sk-lines { flex: 1; margin-left: 44px; }
+.sk-hero .sk-kind { width: 64px; height: 18px; }
+.sk-hero .sk-h1 { width: 34%; height: 46px; margin-top: 22px; }
+.sk-hero .sk-h2 { width: 22%; height: 18px; margin-top: 18px; opacity: .7; }
+
+.pager { margin: 8px 0 22px; }
+
+/* ---------- player bar ---------- */
+
+#playerbar {
+  height: 112px;
+  flex: 0 0 112px;
+  display: flex;
+  align-items: center;
+  padding: 0 44px;
+  background: #131317;
+  border-top: 1px solid var(--line);
+}
+
+.pb-left { display: flex; align-items: center; width: 31%; min-width: 0; }
+/* Cover + title is the way into the playing page: it is the one card you would
+   reach for on a big screen, so OK on it opens the full view. The chip hugs its
+   content instead of the whole 31% column, which keeps the highlight tight. */
+.pb-chip {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  min-width: 0;
+  /* negative margin cancels the padding so the cover stays put */
+  margin-left: -12px;
+  padding: 8px 24px 8px 12px;
+  border-radius: 14px;
+}
+.pb-chip.focused { background: rgba(255, 255, 255, .10); box-shadow: 0 0 0 2px var(--accent); }
+.pb-cover {
+  width: 72px; height: 72px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background: #1d1d22 center/cover no-repeat;
+}
+.pb-meta { margin-left: 18px; min-width: 0; }
+.pb-title { font-size: 21px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pb-artist { font-size: 16px; color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
+
+.pb-center { flex: 1; padding: 0 34px; min-width: 0; }
+/* Seek on top, transport underneath, both centred on the same axis. */
+.pb-seek { display: flex; align-items: center; margin-bottom: 12px; }
+.pb-seek span {
+  width: 54px;
+  color: var(--text-3);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.pb-seek span:first-child { text-align: right; padding-right: 12px; }
+.pb-seek span:last-child { text-align: left; padding-left: 12px; }
+/* align-items matters: the play key is taller than the others, and without it
+   the shorter keys hang from the top of the row instead of centring on it. */
+#pb-buttons { display: flex; align-items: center; justify-content: center; }
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 7px;
+  padding: 0;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 0;
+  border-radius: 999px;
+  transition: background-color .16s ease, color .16s ease,
+              transform .16s ease, box-shadow .16s ease;
+}
+/* Glyph only: every transport button is a round key, so the icon sits dead
+   centre and only the play key is larger. A swapped glyph fades in instead of
+   popping, which keeps play↔pause from feeling like a twitch. */
+.btn-ico {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  fill: currentColor;
+  animation: glyphIn .18s ease both;
+}
+@keyframes glyphIn {
+  from { opacity: 0; transform: scale(.82); }
+  to { opacity: 1; transform: none; }
+}
+.icon-btn.focused { background: var(--accent); color: var(--ink); transform: scale(1.05); }
+.icon-btn.primary { background: var(--accent); color: var(--ink); width: 64px; height: 64px; }
+.icon-btn.primary.focused { box-shadow: 0 0 0 3px rgba(255, 255, 255, .45); }
+
+.pb-progress {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .16);
+  overflow: hidden;
+}
+#pb-bar {
+  position: relative;
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: var(--accent);
+  /* timeupdate only ticks a few times a second; easing the width hides it */
+  transition: width .25s linear;
+}
+
+.pb-right { width: 13%; display: flex; justify-content: flex-end; }
+
+/* ---------- now playing ---------- */
+
+.overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  background: #17161a;
+  animation: fadeIn .22s ease both;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* leaving gets the same courtesy as arriving, on the contents so the page
+   behind is already visible while it fades */
+#np.closing .np-body, #np.closing .np-bar { animation: npOut .18s ease both; }
+@keyframes npOut { to { opacity: 0; transform: scale(.988); } }
+
+/* Chora's StaticBlur background: four soft colour fields drawn from the
+   artwork, not a blurred copy of it, so the page reads as a colour rather
+   than a smear of the cover. app.js samples the cover into --np-rgb*. */
+#np { --np-rgb: 89, 194, 255; --np-rgb-2: 150, 216, 255; --np-rgb-3: 40, 92, 132; }
+
+.np-bg {
+  position: absolute;
+  top: -12%; right: -12%; bottom: -12%; left: -12%;
+  background:
+    radial-gradient(circle at 26% 34%, rgba(var(--np-rgb), .78), rgba(var(--np-rgb), 0) 58%),
+    radial-gradient(circle at 78% 22%, rgba(var(--np-rgb-2), .55), rgba(var(--np-rgb-2), 0) 56%),
+    radial-gradient(circle at 72% 86%, rgba(var(--np-rgb-3), .80), rgba(var(--np-rgb-3), 0) 60%),
+    radial-gradient(circle at 20% 88%, rgba(var(--np-rgb), .55), rgba(var(--np-rgb), 0) 58%),
+    #17161a;
+  filter: blur(48px) saturate(1.05);
+  transition: transform 12s linear;
+}
+body.is-paused .np-bg { transform: scale(1.04); }
+
+.np-body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 0 96px 0;
+  background: radial-gradient(120% 110% at 50% 42%,
+    rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, .34) 100%);
+}
+.np-left {
+  width: 760px;
+  flex: 0 0 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-right: 40px;
+}
+.np-cover {
+  position: relative;
+  width: 560px; height: 560px;
+  border-radius: 22px;
+  background: #1d1d22 center/cover no-repeat;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, .42), 0 0 0 1px rgba(255, 255, 255, .06);
+}
+.np-title {
+  font-size: 46px; font-weight: 600;
+  margin-top: 34px; line-height: 1.2; letter-spacing: -.4px;
+  color: #fff;
+  /* two lines at most, so a very long title can never push the cover around */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.np-album { font-size: 28px; color: rgba(255, 255, 255, .74); margin-top: 10px; max-width: 90%;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.np-artist { font-size: 26px; color: rgba(255, 255, 255, .62); margin-top: 4px; max-width: 90%;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.np-right {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 0 110px 0 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+.np-label { font-size: 15px; letter-spacing: 3px; color: var(--text-3); }
+
+.np-next { margin-top: 26px; min-height: 0; flex: 1; display: flex; flex-direction: column; }
+/* The queue opens in place of the lyrics as a short list, so it sits centred
+   against the cover instead of hanging off the top of the column. */
+#np-next { justify-content: center; }
+/* With the queue showing, the block only needs its natural height, so the
+   whole right column stays centred against the cover. The lyric pane keeps
+   flex:1 to fill the remaining space. */
+.np-queue { margin-top: 14px; overflow: hidden; }
+.np-queue .row { min-height: 76px; padding: 6px 14px; }
+.np-queue .row .rcover { width: 56px; height: 56px; margin-right: 16px; border-radius: 8px; }
+.np-queue .row .rtitle { font-size: 21px; }
+.np-queue .row .rsub { font-size: 16px; }
+.np-queue .row.focused { background: rgba(255, 255, 255, .14); }
+
+.np-lyric-box {
+  position: relative;
+  margin-top: 20px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  /* Soft edges: a mask fades the glyphs out instead of painting a dark band
+     over the colour field behind them. */
+  -webkit-mask-image: linear-gradient(180deg,
+      rgba(0, 0, 0, 0) 0%, #000 120px, #000 calc(100% - 120px), rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(180deg,
+      rgba(0, 0, 0, 0) 0%, #000 120px, #000 calc(100% - 120px), rgba(0, 0, 0, 0) 100%);
+}
+
+/* Anchored at the middle of the pane; the active line's centre is translated
+   onto it, which keeps scrolling effortless for the GPU. */
+.lyric-inner {
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  transition: transform .5s cubic-bezier(.22, .61, .36, 1);
+  will-change: transform;
+}
+.lyric-inner.empty { transform: translateY(-50%) !important; }
+/* Untimed lyrics have no line to centre, so they start at the top and drift. */
+.lyric-inner.plain { top: 0; }
+
+.lyric-line {
+  padding: 22px 0;
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  color: rgba(255, 255, 255, .38);
+  letter-spacing: -.2px;
+  /* the line being sung comes up to full brightness, the rest stay dim */
+  transform: scale(.96);
+  transition: color .35s ease, transform .45s cubic-bezier(.22, 1.12, .36, 1);
+}
+.lyric-line.on {
+  color: #fff;
+  transform: scale(1);
+}
+.lyric-empty { color: rgba(255, 255, 255, .42); font-size: 21px; padding: 10px 0; text-align: center; }
+
+/* ---------- now playing: auto-hiding control bar ---------- */
+
+.np-bar {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0 30px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .52) 58%);
+  transition: opacity .24s ease, transform .24s ease, visibility 0s;
+}
+/* Chora hides the transport until the remote is touched, so the page is just
+   the record and its lyrics; any key brings the bar back for five seconds.
+   It slides away rather than vanishing, and visibility flips only after the
+   fade so the controls cannot be focused while invisible. */
+#np.nobar .np-bar {
+  opacity: 0;
+  transform: translateY(26px);
+  visibility: hidden;
+  transition: opacity .24s ease, transform .24s ease, visibility 0s linear .24s;
+}
+
+.np-seek-row { width: 860px; display: flex; align-items: center; }
+.np-seek {
+  flex: 1;
+  height: 6px;
+  margin: 0 20px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .24);
+  overflow: hidden;
+}
+.np-seek.focused { box-shadow: 0 0 0 4px rgba(255, 255, 255, .28); }
+#np-seek-fill { height: 100%; width: 0; background: #fff; transition: width .25s linear; }
+.np-seek-row span {
+  width: 62px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, .7);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.np-controls {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  height: 68px;
+}
+.np-controls .icon-btn { width: 64px; height: 64px; margin: 0 8px; }
+.np-controls .icon-btn.primary { width: 78px; height: 78px; }
+.np-controls .btn-ico { width: 25px; height: 25px; }
+.np-controls .icon-btn.primary .btn-ico { width: 30px; height: 30px; }
+
+/* full-screen lyrics: drop the cover column, enlarge the text */
+#np.fs .np-left { display: none; }
+#np.fs .np-right { padding: 0 180px; }
+#np.fs .lyric-line { font-size: 50px; padding: 22px 0; }
+/* The jump from the pane layout to full-screen is instant — the contents take a
+   short fade so the cut is not what the eye lands on. */
+#np.fs .np-body { animation: fsIn .26s ease both; }
+@keyframes fsIn { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
+
+/* ---------- on-screen keyboard ---------- */
+
+.osk {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 70;
+  display: flex;
+  justify-content: center;
+  padding: 0 0 34px;
+  background: linear-gradient(180deg, rgba(14, 14, 17, 0), rgba(14, 14, 17, .97) 36%);
+}
+.osk-panel {
+  width: 1420px;
+  padding: 26px 40px 32px;
+  background: var(--surface);
+  border-radius: 26px;
+}
+.osk-top { display: flex; align-items: baseline; margin-bottom: 22px; }
+.osk-label { flex: 0 0 auto; color: var(--text-3); font-size: 15px; letter-spacing: 2px; margin-right: 22px; }
+.osk-text {
+  flex: 1; min-width: 0;
+  font-size: 27px;
+  color: var(--text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-bottom: 2px solid rgba(255, 255, 255, .16);
+  padding-bottom: 9px;
+}
+.osk-text.empty { color: var(--text-3); }
+
+.osk-keys { display: flex; flex-direction: column; align-items: center; }
+.osk-row { display: flex; justify-content: center; }
+.osk-key {
+  min-width: 104px;
+  height: 82px;
+  margin: 6px;
+  padding: 0 10px;
+  font-size: 26px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 0;
+  border-radius: 12px;
+}
+.osk-key.focused { background: var(--accent); color: var(--ink); }
+.osk-wide { min-width: 190px; font-size: 21px; }
+
+/* ---------- toast ---------- */
+
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 148px;
+  transform: translateX(-50%);
+  max-width: 70%;
+  padding: 15px 30px;
+  border-radius: 14px;
+  background: rgba(38, 38, 44, .97);
+  color: var(--text);
+  font-size: 19px;
+  z-index: 90;
+  animation: fadeIn .18s ease both;
+}
+
+/* Full-screen lyrics fill the whole height, so the toast steps up out of them. */
+#np.fs ~ #toast { bottom: auto; top: 84px; }
+
+/* ---------- scrollbar ---------- */
+
+#content::-webkit-scrollbar { width: 8px; }
+#content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .16); border-radius: 4px; }

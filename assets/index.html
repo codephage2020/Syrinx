@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>Syrinx</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+
+  <section id="login" class="screen" hidden>
+    <div class="login-card">
+      <div class="login-logo">Syrinx <span>TV</span></div>
+      <div class="login-sub">连接你的 fnOS 音乐库</div>
+      <label class="field-label">服务器地址</label>
+      <input id="lg-host" class="f field" type="text" placeholder="http://192.168.1.10:11180">
+      <label class="field-label">用户名</label>
+      <input id="lg-user" class="f field" type="text" placeholder="用户名">
+      <label class="field-label">密码</label>
+      <input id="lg-pass" class="f field" type="password" placeholder="密码">
+      <div id="lg-err" class="login-err" hidden></div>
+      <button id="lg-btn" class="f btn btn-primary" type="button" data-act="login">登录</button>
+      <div class="login-hint">方向键选择，按确认键编辑，按返回键收起键盘</div>
+    </div>
+  </section>
+
+  <div id="shell" hidden>
+    <div id="main">
+      <nav id="sidebar">
+        <div id="nav-list"></div>
+        <div class="nav-foot" id="nav-user"></div>
+      </nav>
+      <main id="content"></main>
+    </div>
+
+    <div id="playerbar">
+      <div class="pb-left">
+        <div class="pb-chip f" tabindex="-1" data-act="np" data-key="pb:np" data-right="p:prev">
+          <div class="pb-cover" id="pb-cover"></div>
+          <div class="pb-meta">
+            <div class="pb-title" id="pb-title">未在播放</div>
+            <div class="pb-artist" id="pb-artist"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pb-center">
+        <div class="pb-seek">
+          <span id="pb-cur">0:00</span>
+          <div class="pb-progress"><div id="pb-bar"></div></div>
+          <span id="pb-dur">0:00</span>
+        </div>
+        <div id="pb-buttons"></div>
+      </div>
+      <div class="pb-right"></div>
+    </div>
+  </div>
+
+  <section id="np" class="overlay nobar" hidden>
+    <div class="np-bg" id="np-bg"></div>
+    <div class="np-body">
+      <div class="np-left">
+        <div class="np-cover" id="np-cover"></div>
+        <div class="np-title" id="np-title"></div>
+        <div class="np-album" id="np-album"></div>
+        <div class="np-artist" id="np-artist"></div>
+      </div>
+      <div class="np-right">
+        <div class="np-next" id="np-lyric">
+          <div class="np-lyric-box" id="np-lyric-box"></div>
+        </div>
+        <div class="np-next" id="np-next" hidden>
+          <div class="np-label">接下来</div>
+          <div id="np-queue" class="np-queue"></div>
+        </div>
+      </div>
+    </div>
+    <div class="np-bar">
+      <div class="np-seek-row">
+        <span id="np-cur">0:00</span>
+        <div class="np-seek f" id="np-seek"><div id="np-seek-fill"></div></div>
+        <span id="np-dur">0:00</span>
+      </div>
+      <div class="np-controls" id="np-controls"></div>
+    </div>
+  </section>
+
+  <section id="osk" class="osk" hidden>
+    <div class="osk-panel">
+      <div class="osk-top">
+        <div class="osk-label" id="osk-label"></div>
+        <div class="osk-text" id="osk-text"></div>
+      </div>
+      <div class="osk-keys" id="osk-keys"></div>
+    </div>
+  </section>
+
+  <div id="toast" hidden></div>
+  <audio id="au" preload="auto"></audio>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
